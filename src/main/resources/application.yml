@@ -1,0 +1,22 @@
+quarkus:
+  log:
+    category:
+      "FILE":
+        level: INFO
+        handlers: fileHandler
+      "PERFORMANCE":
+        level: DEBUG
+    handler:
+      file:
+        fileHandler:
+          enable: true
+          format: '%d{yyyy-MM-dd HH:mm:ss,SSS} %-30t - %m%n%e'
+          level: INFO
+          path: jak-1-quarkus.log
+          rotation:
+            file-suffix: -yyyy-MM-dd
+            max-file-size: 10M
+            max-backup-index: 10
+# Comma separated list
+delegation:
+  list: http://localhost:8080

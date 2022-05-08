@@ -1,0 +1,17 @@
+#!/bin/bash -e
+
+if [[ "$1" == "-h" ]]; then
+	exec /usr/local/s2i/usage
+fi
+
+echo "---> Copy application source..."
+cp -Rf /tmp/src/. ./
+
+echo "---> Building application from source..."
+./gradlew build --exclude-task test
+
+echo "---> Copying built application..."
+cp -a build/quarkus-app/* /deployments/
+
+echo "---> Clearing $(pwd)..."
+rm -rf ./*
