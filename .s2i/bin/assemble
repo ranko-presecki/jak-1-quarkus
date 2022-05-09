@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 if [[ "$1" == "-h" ]]; then
-	exec /usr/local/s2i/usage
+  exec /usr/local/s2i/usage
 fi
 
 echo "---> Copy application source..."
@@ -13,5 +13,5 @@ echo "---> Building application from source..."
 echo "---> Copying built application..."
 cp -a build/quarkus-app/* /deployments/
 
-echo "---> Clearing $(pwd)..."
+echo "---> Cleaning $(pwd)..."
 rm -rf ./*
