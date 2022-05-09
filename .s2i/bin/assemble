@@ -13,5 +13,5 @@ echo "---> Building application from source..."
 echo "---> Copying built application..."
 cp -a build/quarkus-app/* /deployments/
 
-echo "---> Cleaning $(pwd)..."
-rm -rf ./*
+#echo "---> Cleaning $(pwd)..."
+#rm -rf ./*
