@@ -1,5 +1,10 @@
 # jak-1-quarkus Project
 
+Made for first JAK Meetup.
+
+Sorting service URL endpoint list can be passed in environment variable `SORTING_URLS`.
+URLs should be comma separated i.e. `SORTING_URLS=http://ss1,http://ss2`
+
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
@@ -46,3 +51,9 @@ Or, if you don't have GraalVM installed, you can run the native executable build
 You can then execute your native executable with: `./build/jak-1-quarkus-1.0.0-SNAPSHOT-runner`
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/gradle-tooling.
+
+## OpenShift deployment
+
+.s2i folder is created since OpenShift Builder Image for Java assumes maven project and single/uber jar, and custom assemble script allows this project to be imported directly from git.
+
+For building image locally refer to `Dockerfile.jvm` or `Dockerfile.native-micro`. It has step-by-step instructions that you can simply copy/paste.
