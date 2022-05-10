@@ -18,5 +18,5 @@ quarkus:
             max-file-size: 10M
             max-backup-index: 10
 # Comma separated list
-delegation:
-  list: http://localhost:8080
+sorting:
+  urls: http://localhost:8080

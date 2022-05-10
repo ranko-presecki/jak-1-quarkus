@@ -4,7 +4,7 @@ import io.quarkus.arc.log.LoggerName;
 import jak.meetup.client.SortingClient;
 import jak.meetup.model.Sorting;
 import jak.meetup.model.SortingResponse;
-import org.eclipse.microprofile.config.ConfigProvider;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.RestClientBuilder;
 import org.jboss.logging.Logger;
 
@@ -17,25 +17,15 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class SortingService {
 
-    private static final List<String> destinationList;
+    @ConfigProperty(name = "sorting.urls")
+    Optional<String> sortingUrls;
+    private List<String> destinationList;
 
     @LoggerName("FILE")
     Logger fileLog;
 
     @LoggerName("ERROR")
     Logger errorLog;
-
-    static {
-        String delegationList = ConfigProvider.getConfig().getValue("delegation.list", String.class);
-        if (delegationList != null) {
-            destinationList = Arrays.stream(delegationList.split(","))
-                    .map(String::trim)
-                    .filter(element -> !"".equals(element))
-                    .collect(Collectors.toList());
-        } else {
-            destinationList = List.of();
-        }
-    }
 
     public SortingResponse sort(Sorting sorting) {
         SortingResponse ret = sorting(sorting.getArraySize());
@@ -60,6 +50,18 @@ public class SortingService {
     }
 
     public Optional<String> getDestination() {
+        if (sortingUrls.isEmpty()) {
+            return Optional.empty();
+        }
+
+        // init
+        if (destinationList == null) {
+            destinationList = Arrays.stream(sortingUrls.get().split(","))
+                    .map(String::trim)
+                    .filter(element -> !"".equals(element))
+                    .collect(Collectors.toList());
+        }
+
         int destinationOptions = destinationList.size();
         if (destinationOptions == 0) {
             return Optional.empty();
