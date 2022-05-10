@@ -6,7 +6,7 @@ import jak.meetup.model.SortingResponse;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-@Path("/")
+@Path("/v1")
 public interface SortingClient {
     @POST
     @Path("sorting")
