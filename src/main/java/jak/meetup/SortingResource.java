@@ -37,7 +37,6 @@ public class SortingResource {
 
     @POST
     @Path("delegated/sorting")
-    @Produces(MediaType.TEXT_PLAIN)
     public Uni<Response> sortDataDelegated(Sorting body) {
         Optional<String> destination = sortingService.getDestination();
         if (destination.isEmpty()) {
@@ -46,7 +45,7 @@ public class SortingResource {
 
         vertx.executeBlocking(promise -> promise.complete(sortingService.delegatedSort(destination.get(), body)));
 
-        return Uni.createFrom().item(Response.accepted().build());
+        return Uni.createFrom().item(Response.ok().build());
     }
 
     private void validate(Sorting body) throws ProcessingException {
